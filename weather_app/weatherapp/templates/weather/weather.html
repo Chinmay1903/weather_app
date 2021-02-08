@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+  <div class="container-fluid bg-primary mb-3"> <strong> &#128578 Welcome to Weather App </strong></div>
+  <div class="container col-5">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Enter City" aria-label="Enter City" aria-describedby="button-addon2">
+        {{form.city}}
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit" id="button-addon2">Add City</button>
+        </div>
+      </div>
+    </form>
+      <div class="alert alert-danger" role="alert">
+        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+      </div>
+      <div class="card mb-3 border border-primary">
+        <div class="row no-gutters">
+          <div class="col-md-2 align-middle">
+            <img src="http://openweathermap.org/img/w/{{city_weather.icon}}.png" class="card-img mt-2" alt="{{desc}}">
+          </div>
+          <div class="col-md-8 d-flex flex-row bd-highlight ">
+            <div class="card-body">
+              <h5 class="card-title">{{city_weather.city}}</h5>
+                <p class="card-text">{{city_weather.temp}} &#8451</p>
+                <p class="card-text text-capitalize"></small>{{city_weather.desc}}</small></p>
+            </div>
+            <div class="card-body">
+              <p class="card-text"><small class="text-muted">Pressure: {{city_weather.pressure}}, Humidity: {{city_weather.humidity}}</small></p>
+                <p class="card-text"><small class="text-muted">Min: {{city_weather.mintemp}} &#8451, Max: {{city_weather.maxtemp}} &#8451</small></p>
+                <p class="card-text"><small class="text-muted">Wind Speed {{city_weather.windspeed}}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="container-xl overflow-auto">
+    <div class="container-fluid bg-primary mt-3 mb-1">History</div>
+    <br>
+      <div class="row row-cols-1 row-cols-md-3">
+        {% for city_weather in weather_data %}
+        <div class="col mb-4">
+        <div class="card mb-3 border border-primary" style="max-width: 540px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="http://openweathermap.org/img/w/{{city_weather.icon}}.png" class="card-img mt-2" alt="{{desc}}">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{city_weather.city}}</h5>
+                  <p class="card-text">{{city_weather.temp}} &#8451</p>
+                  <p class="card-text text-capitalize"></small>{{city_weather.desc}}</small></p>
+              </div>
+              <div class="card-body">
+                <p class="card-text"><small class="text-muted">Pressure: {{city_weather.pressure}}, Humidity: {{city_weather.humidity}}</small></p>
+                  <p class="card-text"><small class="text-muted">Min: {{city_weather.mintemp}} &#8451, Max: {{city_weather.maxtemp}} &#8451</small></p>
+                  <p class="card-text"><small class="text-muted">Wind Speed {{city_weather.windspeed}}</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+</body>
+</html>
